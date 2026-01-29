@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StudentSaathi AI 🇮🇳</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #0f172a, #020617 70%);
+  color: #e5e7eb;
+}
+
+.app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+header h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #60a5fa, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header p {
+  margin-top: 8px;
+  color: #94a3b8;
+}
+
+/* LANGUAGE */
+.lang-form {
+  margin-top: 14px;
+}
+
+/* SECTION LABEL */
+.section-label {
+  margin: 30px 0 18px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  letter-spacing: 0.6px;
+}
+
+/* CARDS */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 26px;
+}
+
+.card {
+  background: #111827;
+  border-radius: 22px;
+  padding: 26px;
+  width: 320px;
+  text-align: center;
+  border: 1px solid rgba(148,163,184,0.12);
+}
+
+.card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: #f8fafc;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-bottom: 14px;
+}
+
+/* INPUTS */
+.card input,
+.card textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #374151;
+  background: #020617;
+  color: #e5e7eb;
+  margin-bottom: 12px;
+}
+
+.card textarea {
+  resize: none;
+  min-height: 90px;
+}
+
+/* BUTTONS */
+button {
+  background: linear-gradient(120deg, #6366f1, #22d3ee);
+  border: none;
+  padding: 12px;
+  border-radius: 30px;
+  color: #020617;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* OUTPUT */
+.output {
+  margin-top: 12px;
+  padding: 12px;
+  background: #020617;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+/* STRESS METER */
+.stress-box {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.stress-box.green {
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+
+.stress-box.yellow {
+  border: 1px solid #facc15;
+  color: #fde047;
+}
+
+.stress-box.red {
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+
+.meter {
+  height: 12px;
+  background: #020617;
+  border-radius: 10px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #ef4444);
+}
+
+/* FOOTER */
+footer {
+  margin-top: 45px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+@media (max-width: 700px) {
+  .card { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <h1>StudentSaathi AI 🇮🇳</h1>
+  <p>Your calm companion for study, career & balance</p>
+
+  <!-- LANGUAGE TOGGLE -->
+  <form method="POST" class="lang-form">
+    <input type="hidden" name="action" value="language">
+    <select name="lang">
+      <option value="hinglish" {% if selected_lang=="hinglish" %}selected{% endif %}>Hinglish</option>
+      <option value="hindi" {% if selected_lang=="hindi" %}selected{% endif %}>Hindi</option>
+    </select>
+    <button>Apply Language</button>
+  </form>
+</header>
+
+<div class="section-label">— STUDY & CAREER —</div>
+<section class="cards">
+
+<!-- STUDY BUDDY -->
+<div class="card">
+  <h3>📘 AI Study Buddy</h3>
+  <p>Ask doubts directly from notes</p>
+
+  <form method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="action" value="study">
+    <input type="file" name="pdf" required>
+    <textarea name="question" placeholder="Ask your doubt..."></textarea>
+    <button>Ask AI</button>
+  </form>
+
+  {% if study_answer %}
+  <div class="output">{{ study_answer }}</div>
+  {% endif %}
+</div>
+
+<!-- PLACEMENT PATH -->
+<div class="card">
+  <h3>🎓 Placement Path AI</h3>
+  <p>Personalised career roadmap</p>
+
+  <form method="POST">
+    <input type="hidden" name="action" value="placement">
+    <input name="college" placeholder="College">
+    <input name="branch" placeholder="Branch">
+    <textarea name="skills" placeholder="Skills"></textarea>
+    <button>Generate Path</button>
+  </form>
+
+  {% if placement_result %}
+  <div class="output">{{ placement_result }}</div>
+  {% endif %}
+</div>
+
+</section>
+
+<div class="section-label">— WELLBEING —</div>
+<section class="cards">
+
+<!-- TIMETABLE -->
+<div class="card">
+  <h3>⏰ Smart Timetable</h3>
+
+  <form method="POST">
+    <input type="hidden" name="action" value="timetable">
+    <textarea name="tasks" placeholder="Daily tasks"></textarea>
+    <input type="number" name="hours" min="1" max="14">
+    <button>Create Plan</button>
+  </form>
+
+  {% if timetable %}
+  <div class="output">
+    {{ timetable }}<br><br>
+    <strong>{{ burnout }}</strong>
+  </div>
+  {% endif %}
+</div>
+
+<!-- WELLNESS -->
+<div class="card">
+  <h3>🧠 Wellness Check</h3>
+  <p>Your mental health matters</p>
+
+  <form method="POST">
+    <input type="hidden" name="action" value="wellness">
+    <textarea name="feeling" placeholder="How are you feeling today?"></textarea>
+    <button>Check In</button>
+  </form>
+
+  {% if wellness_result %}
+  <div class="output">{{ wellness_result }}</div>
+
+  <div class="stress-box {{ stress_color }}">
+    <strong>{{ stress_level }}</strong>
+    <div class="meter">
+      <div class="fill" style="width: {{ stress_percent }}%;"></div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+</section>
+
+<footer>
+Built for students of Bharat 🇮🇳 • Focus • Balance • Growth
+</footer>
+
+</div>
+
+</body>
+</html>
